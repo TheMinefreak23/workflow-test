@@ -1,3 +1,6 @@
+"""
+Mock docstring
+"""
 import unittest
 
 from mock import mock

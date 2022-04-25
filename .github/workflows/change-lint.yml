@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest  # windows-latest | macos-latest
     name: Retrieve changed files
     outputs: 
-      files: steps.changedfiles.changed-files.outputs.all_changed_files
+      files: steps.changedfiles.changed-files.outputs
     steps:
       - uses: actions/checkout@v3
         with:
@@ -24,14 +24,9 @@ jobs:
         uses: tj-actions/changed-files@v18.7
         with:
           files: |
-            */src/*
-            */fairreckitlib/*
-            *.py
+            **.py
           files_ignore: |
-            *.yml
-            *.md
-            *.toml
-            *.cfg
+            !**.py
             
       - name: echo
         run: |
@@ -41,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest  # windows-latest | macos-latest
     needs: changedfiles
     name: Lint changed Python files
-    if: needs.changedfiles.files
+    if: needs.changedfiles.files.any_changed
     steps:
       - name: Install dependencies
         run: |
@@ -57,6 +52,6 @@ jobs:
           
       - name: Lint all changed files
         run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+          for file in ${{ needs.changedfiles.outputs.files.all_changed_files }}; do
             pylint $file
           done

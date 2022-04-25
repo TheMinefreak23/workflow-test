@@ -11,9 +11,9 @@ on:
       - main
 
 jobs:
-  build:
+  lintchanges:
     runs-on: ubuntu-latest  # windows-latest | macos-latest
-    name: Test changed-files
+    name: Lint changed Python files
     steps:
       - uses: actions/checkout@v3
         with:
@@ -22,6 +22,8 @@ jobs:
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v18.7
+        with:
+          files: *.py
 
       - name: Install dependencies
         run: |
@@ -36,6 +38,7 @@ jobs:
           pip install rexmex
           
       - name: Lint all changed files
+        if: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             pylint $file

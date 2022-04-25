@@ -24,9 +24,10 @@ jobs:
         uses: tj-actions/changed-files@v18.7
         with:
           files: |
-            src/*
-            fairreckitlib/*
             *.py
+      - name: echo
+        run: |
+          echo "${{ steps.changed-files.outputs.all_changed_files }}"
       
   lintchanges:
     runs-on: ubuntu-latest  # windows-latest | macos-latest

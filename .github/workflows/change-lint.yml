@@ -24,13 +24,13 @@ jobs:
         uses: tj-actions/changed-files@v18.7
         with:
           files: |
-            **.py
+            **/*.py
           files_ignore: |
             !**.py
             
       - name: echo
         run: |
-          echo "${{ steps.changed-files.outputs.all_changed_files }}"
+          echo "${{ steps.changed-files.outputs.any_changed }}"
       
   lintchanges:
     runs-on: ubuntu-latest  # windows-latest | macos-latest

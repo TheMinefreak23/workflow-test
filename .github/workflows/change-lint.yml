@@ -27,7 +27,7 @@ jobs:
             */src/*
             */fairreckitlib/*
             *.py
-          files_exclude: |
+          files_ignore: |
             *.yml
             *.md
             *.toml

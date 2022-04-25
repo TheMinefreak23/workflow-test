@@ -9,9 +9,9 @@ on:
       - main
 
 jobs:
-  changedfiles:
+  lintchanges:
     runs-on: ubuntu-latest  # windows-latest | macos-latest
-    name: Retrieve changed files
+    name: Retrieve and lint changed files
     outputs: 
       files: steps.changedfiles.changed-files.outputs
     steps:
@@ -32,15 +32,9 @@ jobs:
         run: |
           echo "${{ steps.changed-files.outputs.any_changed }}"
       
-  lintchanges:
-    runs-on: ubuntu-latest  # windows-latest | macos-latest
-    needs: changedfiles
-    name: Lint changed Python files
-    
-    steps:
       - name: Install dependencies
+        if: steps.changed-files.outputs.any_changed
         run: |
-          echo "${{needs.changedfiles.files.any_changed}}"
           python -m pip install --upgrade pip
           pip install pylint
           pip install lenskit
@@ -52,7 +46,8 @@ jobs:
           pip install rexmex
           
       - name: Lint all changed files
+        if: steps.changed-files.outputs.any_changed
         run: |
-          for file in ${{ needs.changedfiles.outputs.files.all_changed_files }}; do
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             pylint $file
           done

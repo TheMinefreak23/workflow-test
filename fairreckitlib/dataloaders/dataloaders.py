@@ -6,7 +6,7 @@ Utrecht University within the Software Project course.
 
 """
 
-"""tes"""
+"""test"""
 
 from typing import Dict
 import os

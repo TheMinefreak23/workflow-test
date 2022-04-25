@@ -36,10 +36,11 @@ jobs:
     runs-on: ubuntu-latest  # windows-latest | macos-latest
     needs: changedfiles
     name: Lint changed Python files
-    if: needs.changedfiles.files.any_changed
+    
     steps:
       - name: Install dependencies
         run: |
+          echo "${{needs.changedfiles.files.any_changed}}"
           python -m pip install --upgrade pip
           pip install pylint
           pip install lenskit

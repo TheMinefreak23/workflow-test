@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Partial lint
 
 on:
@@ -23,7 +21,8 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v18.7
         with:
-          files: *.py
+          files: |
+            *.py
 
       - name: Install dependencies
         run: |

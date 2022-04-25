@@ -24,7 +24,15 @@ jobs:
         uses: tj-actions/changed-files@v18.7
         with:
           files: |
+            */src/*
+            */fairreckitlib/*
             *.py
+          files_exclude: |
+            *.yml
+            *.md
+            *.toml
+            *.cfg
+            
       - name: echo
         run: |
           echo "${{ steps.changed-files.outputs.all_changed_files }}"

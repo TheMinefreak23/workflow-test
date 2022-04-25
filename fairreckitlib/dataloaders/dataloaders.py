@@ -8,7 +8,6 @@ Utrecht University within the Software Project course.
 
 from typing import Dict
 import os
-import lenskit
 
 import pandas as pd
 from .utility import get_configs
